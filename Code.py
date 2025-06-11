@@ -15,7 +15,7 @@ def fetch_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
 def play_alarm():
-    sound_file = "D:/SSB_WEBAPP/alarm-327234.mp3"
+    sound_file = "alarm-327234.mp3"
     try:
         with open(sound_file, "rb") as f:
             data = f.read()
@@ -107,7 +107,7 @@ elif selection == "TAT (Thematic Apperception test)":
     def play_alarm():
         if not show_timer_and_alarm:
             return
-        sound_file = "D:/SSB_WEBAPP/sound.mp3"
+        sound_file = "sound.mp3"
         try:
             with open(sound_file, "rb") as f:
                 data = f.read()
@@ -257,7 +257,7 @@ elif selection == "WAT (Word Association test)":
 
     # Play alarm
     def play_alarm():
-        sound_file = "D:/SSB_WEBAPP/mixkit-software-interface-back-2575.wav"
+        sound_file = "mixkit-software-interface-back-2575.wav"
         try:
             with open(sound_file, "rb") as f:
                 b64 = base64.b64encode(f.read()).decode()
@@ -346,7 +346,7 @@ elif selection == "SRT (Situation Reaction test)":
 
     # Alarm function
     def play_alarm():
-        sound_file = "D:/SSB_WEBAPP/mixkit-software-interface-back-2575.wav"
+        sound_file = "mixkit-software-interface-back-2575.wav"
         try:
             with open(sound_file, "rb") as f:
                 data = f.read()
@@ -463,7 +463,7 @@ elif selection == "Lecturrette":
         return filename
 
     def play_alarm():
-        sound_file = "D:/SSB_WEBAPP/mixkit-software-interface-back-2575.wav"
+        sound_file = "mixkit-software-interface-back-2575.wav"
         try:
             with open(sound_file, "rb") as f:
                 b64 = base64.b64encode(f.read()).decode()
