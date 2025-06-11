@@ -1,5 +1,3 @@
 streamlit
 Pillow
 PyPDF2
-sounddevice
-soundfile
