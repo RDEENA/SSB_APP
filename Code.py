@@ -546,7 +546,7 @@ elif selection == "Lecturrette":
             st.session_state.lec_start_clicked = False
 
     def play_alarm():
-        sound_file = "mixkit-software-interface-back-2575.mp3"  # Use just file name if in same directory
+        sound_file = "mixkit-software-interface-back-2575.wav"  # Use just file name if in same directory
         try:
             with open(sound_file, "rb") as f:
                 b64 = base64.b64encode(f.read()).decode()
