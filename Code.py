@@ -8,7 +8,6 @@ import time as t
 from PyPDF2 import PdfReader
 import re
 from threading import Thread
-import playsound
 def fetch_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
