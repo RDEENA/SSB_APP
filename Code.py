@@ -7,7 +7,6 @@ from PIL import Image
 import time as t
 from PyPDF2 import PdfReader
 import re
-import soundfile as sf
 from threading import Thread
 import playsound
 def fetch_image(image_path):
