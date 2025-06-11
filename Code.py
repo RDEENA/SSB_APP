@@ -48,7 +48,7 @@ selection = st.sidebar.radio("Go to", [
 ])
 
 if selection == "Home":
-    final_image = fetch_image("D:/SSB_WEBAPP/backgroundimage.jpg")
+    final_image = fetch_image("backgroundimage.jpg")
     st.markdown(
         f"""
         <style>
