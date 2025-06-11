@@ -430,18 +430,111 @@ elif selection == "SRT (Situation Reaction test)":
         st.session_state.srt_running = False
         st.session_state.srt_start_clicked = False
         st.success("SRT session completed or stopped.")
+# elif selection == "Lecturrette":
+#     st.title("Lecturrette")
+
+#     for key in ["lec_running", "lec_stop", "lec_start_clicked", "audio_data"]:
+#         if key not in st.session_state:
+#             st.session_state[key] = False if key != "audio_data" else None
+
+#     show_timer = st.toggle("Show Timer & Play Sound")
+
+#     prep_time = st.number_input("Lecture Time (seconds)", min_value=10, value=150)
+#     talk_time = st.number_input("Remaining Time (seconds)", min_value=5, value=30)
+#     total_time = prep_time + talk_time
+
+#     col1, col2 = st.columns(2)
+#     with col1:
+#         if st.button("Start Lecturrette", disabled=st.session_state.lec_running):
+#             st.session_state.lec_running = True
+#             st.session_state.lec_stop = False
+#             st.session_state.lec_start_clicked = True
+#     with col2:
+#         if st.button("Stop Lecturrette", disabled=not st.session_state.lec_running):
+#             st.session_state.lec_stop = True
+#             st.session_state.lec_running = False
+#             st.session_state.lec_start_clicked = False
+
+#     def record_audio(duration, filename="recorded_lecturrette.wav"):
+#         fs = 44100
+#         st.session_state.audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=1)
+#         sd.wait()
+#         sf.write(filename, st.session_state.audio_data, fs)
+#         return filename
+
+#     def play_alarm():
+#         sound_file = "mixkit-software-interface-back-2575.wav"
+#         try:
+#             with open(sound_file, "rb") as f:
+#                 b64 = base64.b64encode(f.read()).decode()
+#                 st.markdown(f"""
+#                     <audio autoplay>
+#                         <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+#                     </audio>""", unsafe_allow_html=True)
+#         except:
+#             st.warning("Alarm sound file missing.")
+
+#     if st.session_state.lec_start_clicked:
+#         status = st.empty()
+#         timer = st.empty()
+
+#         status.markdown("🎙️ **Recording Started...**")
+#         record_thread = Thread(target=record_audio, args=(total_time,))
+#         record_thread.start()
+
+#         # Lecture Time Countdown
+#         if show_timer:
+#             for sec in range(prep_time, 0, -1):
+#                 if st.session_state.lec_stop:
+#                     break
+#                 timer.markdown(f"📝 **Lecture Time: {sec} seconds**")
+#                 t.sleep(1)
+#             timer.empty()
+#         else:
+#             t.sleep(prep_time)
+
+#         if not st.session_state.lec_stop:
+#             play_alarm()  # Always alert after lecture time (toggle doesn't matter)
+
+#         # Talk Time Countdown
+#         if not st.session_state.lec_stop:
+#             if show_timer:
+#                 for sec in range(talk_time, 0, -1):
+#                     if st.session_state.lec_stop:
+#                         break
+#                     timer.markdown(f"🗣️ **Talk Time Remaining: {sec} seconds**")
+#                     t.sleep(1)
+#                 timer.empty()
+#                 play_alarm()
+#             else:
+#                 t.sleep(talk_time)
+
+#         record_thread.join()
+#         st.session_state.lec_running = False
+#         st.session_state.lec_start_clicked = False
+#         st.success("Lecturrette session completed or stopped.")
+
+#         # Show playback + download
+#         if os.path.exists("recorded_lecturrette.wav"):
+#             with open("recorded_lecturrette.wav", "rb") as f:
+#                 audio_bytes = f.read()
+#                 st.audio(audio_bytes, format="audio/wav")
+#                 b64 = base64.b64encode(audio_bytes).decode()
+#                 st.markdown(
+#                     f'<a href="data:audio/wav;base64,{b64}" download="Lecturrette_Recording.wav">📥 Download Recording</a>',
+#                     unsafe_allow_html=True
+#                 )
 elif selection == "Lecturrette":
     st.title("Lecturrette")
 
-    for key in ["lec_running", "lec_stop", "lec_start_clicked", "audio_data"]:
+    for key in ["lec_running", "lec_stop", "lec_start_clicked"]:
         if key not in st.session_state:
-            st.session_state[key] = False if key != "audio_data" else None
+            st.session_state[key] = False
 
     show_timer = st.toggle("Show Timer & Play Sound")
 
     prep_time = st.number_input("Lecture Time (seconds)", min_value=10, value=150)
     talk_time = st.number_input("Remaining Time (seconds)", min_value=5, value=30)
-    total_time = prep_time + talk_time
 
     col1, col2 = st.columns(2)
     with col1:
@@ -455,15 +548,8 @@ elif selection == "Lecturrette":
             st.session_state.lec_running = False
             st.session_state.lec_start_clicked = False
 
-    def record_audio(duration, filename="recorded_lecturrette.wav"):
-        fs = 44100
-        st.session_state.audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=1)
-        sd.wait()
-        sf.write(filename, st.session_state.audio_data, fs)
-        return filename
-
     def play_alarm():
-        sound_file = "mixkit-software-interface-back-2575.wav"
+        sound_file = "mixkit-software-interface-back-2575.mp3"  # Use just file name if in same directory
         try:
             with open(sound_file, "rb") as f:
                 b64 = base64.b64encode(f.read()).decode()
@@ -475,14 +561,9 @@ elif selection == "Lecturrette":
             st.warning("Alarm sound file missing.")
 
     if st.session_state.lec_start_clicked:
-        status = st.empty()
         timer = st.empty()
 
-        status.markdown("🎙️ **Recording Started...**")
-        record_thread = Thread(target=record_audio, args=(total_time,))
-        record_thread.start()
-
-        # Lecture Time Countdown
+        # ⏳ Lecture Time
         if show_timer:
             for sec in range(prep_time, 0, -1):
                 if st.session_state.lec_stop:
@@ -494,9 +575,9 @@ elif selection == "Lecturrette":
             t.sleep(prep_time)
 
         if not st.session_state.lec_stop:
-            play_alarm()  # Always alert after lecture time (toggle doesn't matter)
+            play_alarm()  # Always play alarm after lecture time
 
-        # Talk Time Countdown
+        # 🗣️ Talk Time
         if not st.session_state.lec_stop:
             if show_timer:
                 for sec in range(talk_time, 0, -1):
@@ -509,20 +590,7 @@ elif selection == "Lecturrette":
             else:
                 t.sleep(talk_time)
 
-        record_thread.join()
+        # Reset state
         st.session_state.lec_running = False
         st.session_state.lec_start_clicked = False
         st.success("Lecturrette session completed or stopped.")
-
-        # Show playback + download
-        if os.path.exists("recorded_lecturrette.wav"):
-            with open("recorded_lecturrette.wav", "rb") as f:
-                audio_bytes = f.read()
-                st.audio(audio_bytes, format="audio/wav")
-                b64 = base64.b64encode(audio_bytes).decode()
-                st.markdown(
-                    f'<a href="data:audio/wav;base64,{b64}" download="Lecturrette_Recording.wav">📥 Download Recording</a>',
-                    unsafe_allow_html=True
-                )
-
-
